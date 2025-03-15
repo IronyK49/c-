@@ -1,11 +1,11 @@
 /*
-2Â÷¿ø ¹è¿­À» ÇÔ¼ö·Î Àü´ŞÇÏ¿© ÇÔ¼ö¿¡¼­ °è»êÇÏ¿© Àü´ŞÇÏ´Â ¹æ½Ä
-int (*data)[](pointer to array) ·Î Àü´ŞÇÏ¿© ÇÔ¼öÀÇ °á°ú¸¦ ¸®ÅÏÇÏ´Â ±¸Çö - static int[][](array of pointer)¸¦ »ç¿ëÇÏ¿© ±¸Çö
-¸Ş¸ğ¸® µ¿Àû »ç¿ë ¾ÈÇÏ°í ¹®Á¦ ÇØ°á °¡´ÉÇÒ±î?
-=> Áßº¹ ÄÚµù ¹ß»ı: °£°áÇÑ ÄÚµù °³¼±ÀÌ ÇÊ¿ä
+2ì°¨ì› ë°°ì—´ì„ í•¨ìˆ˜ë¡œ ì „ë‹¬í•˜ì—¬ í•¨ìˆ˜ì—ì„œ ê³„ì‚°í•˜ì—¬ ì „ë‹¬í•˜ëŠ” ë°©ì‹
+int (*data)[](pointer to array) ë¡œ ì „ë‹¬í•˜ì—¬ í•¨ìˆ˜ì˜ ê²°ê³¼ë¥¼ ë¦¬í„´í•˜ëŠ” êµ¬í˜„ - static int[][](array of pointer)ë¥¼ ì‚¬ìš©í•˜ì—¬ êµ¬í˜„
+ë©”ëª¨ë¦¬ ë™ì  ì‚¬ìš© ì•ˆí•˜ê³  ë¬¸ì œ í•´ê²° ê°€ëŠ¥í• ê¹Œ?
+=> ì¤‘ë³µ ì½”ë”© ë°œìƒ: ê°„ê²°í•œ ì½”ë”© ê°œì„ ì´ í•„ìš”
 */
 
-//c++ : cascading operation : add(add(a,b),c) = a¿Í b Çà·ÄÀ» ´õÇÑ Çà·Ä¿¡ c¸¦ ´õÇÔ 
+//c++ : cascading operation : add(add(a,b),c) = aì™€ b í–‰ë ¬ì„ ë”í•œ í–‰ë ¬ì— cë¥¼ ë”í•¨ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -33,7 +33,7 @@ int(*transposeMatrix(int b[][BCOLS], int rows_b))[ECOLS];
 int(*multiplyTransposeMatrix(int a[][ACOLS], int rows_a, int(*e)[ECOLS], int rows_e))[CCOLS];
 
 int main() {
-    srand(42);//seed °ªÀÌ ÁÖ¾îÁö¸é ³­¼ö »ı¼º °á°ú°¡ Ç×»ó °°°Ô ¸¸µé¾îÁü
+    srand(42);//seed ê°’ì´ ì£¼ì–´ì§€ë©´ ë‚œìˆ˜ ìƒì„± ê²°ê³¼ê°€ í•­ìƒ ê°™ê²Œ ë§Œë“¤ì–´ì§
 
     int a[AROWS][ACOLS], a2[AROWS][ACOLS], b[BROWS][BCOLS], c[CROWS][CCOLS], d[DROWS][DCOLS], e[DROWS][DCOLS];
 
@@ -56,7 +56,7 @@ int main() {
     printf("Matrix Result2:\n");
     showMatrix(result2, AROWS);
 
-    //°ö¼À
+    //ê³±ì…ˆ
     getMatrix_b(b, BROWS);
     printf("Matrix B:\n");
     showMatrix_b(b, BROWS);
@@ -76,13 +76,97 @@ int main() {
     return 0;
 }
 
-int(*addMatrix(int a1[][ACOLS], int rows1, int a2[][ACOLS], int rows2))[ACOLS] {//return °ªÀº (*a)[]
-    //ÇÔ¼ö ¹İÈ¯°ªÀÌ int(*)[]ÇüÅÂ
-    int (*result)[ACOLS]; // static int result[AROWS][ACOLS] -> ÇÔ¼ö°¡ ³¡³ª¸é »ç¶óÁü(static »ç¿ë : ÇÔ¼ö ³¡³ªµµ ¾È»ç¶óÁü) 
+void getMatrix(int matrix[][ACOLS], int rows) { //matrix[] = (*matrix) pointer to array / ë°°ì—´ì„ í¬ì¸í„°ë¡œ ë°›ì•„ì„œ ì‚¬ìš©
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < ACOLS; j++) {
+            matrix[i][j] = rand() % 10;
+        }
+    }
+}
+//í–‰ë ¬ì´ ë‹¤ë¥¸ ë°°ì—´ë“¤ì„ í•œ í•¨ìˆ˜ë¡œ ë‚œìˆ˜ ì§‘ì–´ë„£ê¸° í• ê²ƒ
+void getMatrix_b(int matrix[][BCOLS], int rows) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < BCOLS; j++) {
+            matrix[i][j] = rand() % 10;
+        }
+    }
+}
+
+void showMatrix(int matrix[][ACOLS], int rows) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < ACOLS; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+void showMatrix_b(int matrix[][BCOLS], int rows) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < BCOLS; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void showMatrix_c(int matrix[][CCOLS], int rows) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < CCOLS; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+int(*addMatrix(int a1[][ACOLS], int rows1, int a2[][ACOLS], int rows2))[ACOLS] {//return ê°’ì€ (*a)[]
+    //í•¨ìˆ˜ ë°˜í™˜ê°’ì´ int(*)[]í˜•íƒœ
+    int (*result)[ACOLS]; // static int result[AROWS][ACOLS] -> í•¨ìˆ˜ê°€ ëë‚˜ë©´ ì‚¬ë¼ì§(static ì‚¬ìš© : í•¨ìˆ˜ ëë‚˜ë„ ì•ˆì‚¬ë¼ì§) 
     for (int i = 0; i < rows1; i++) {
         for (int j = 0; j < rows2; j++) {
             result[i][j] = a1[i][j] + a2[i][j];
         }
     }
-    return result; 
+    return result;
+}
+
+int (*transposeMatrix(int b[][BCOLS], int rows_b))[ECOLS] {
+    int (*result)[ECOLS];
+    for (int i = 0; i < rows_b; i++) {
+        for (int j = 0; j < BCOLS; j++) {
+            result[j][i] = b[i][j];
+        }
+    }
+    return result;
+}
+int(*multiplyMatrix(int a[][ACOLS], int rows_a, int b[][BCOLS], int rows_b))[CCOLS];
+
+int (*multiplyMatrix(int a[][ACOLS], int rows_a, int b[][BCOLS], int rows_b))[CCOLS] {
+    int (*result)[CCOLS];
+    for (int i = 0; i < rows_a; i++) {
+        for (int j = 0; j < BCOLS; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < BCOLS; k++) {
+                result[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+    return result;
+}
+
+int(*multiplyTransposeMatrix(int a[][ACOLS], int rows_a, int(*e)[ECOLS], int rows_e))[CCOLS];
+
+int (*multiplyTransposeMatrix(int a[][ACOLS], int rows_a, int e[][ECOLS], int rows_e))[CCOLS]{
+    int (*result)[CCOLS];
+    for (int i = 0; i < rows_a; i++) {
+        for (int j = 0; j < ECOLS; j++) {
+            result[i][j] = 0;
+            for (int k = 0; k < ECOLS; k++) {
+                result[i][j] += a[i][k] * e[k][j];
+            }
+        }
+    }
+    return result;
 }
