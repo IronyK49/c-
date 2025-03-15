@@ -1,13 +1,13 @@
 /*
- * PCCP ÄÚµù ½ÃÇè¿¡¼­ ½ºÆ®¸µ¿¡ ´ëÇÑ ±âº» ÇÔ¼ö »ç¿ë ¼÷´ŞÀÌ ÇÊ¿äÇÏ´Ù
+ * PCCP ì½”ë”© ì‹œí—˜ì—ì„œ ìŠ¤íŠ¸ë§ì— ëŒ€í•œ ê¸°ë³¸ í•¨ìˆ˜ ì‚¬ìš© ìˆ™ë‹¬ì´ í•„ìš”í•˜ë‹¤
  *
  */
  /*
-  char*¿Í cstring ÇÔ¼ö¸¦ »ç¿ëÇÏ¿© ¹®ÀÚ¿­ Ã³¸®
- ºÎºĞ ¹®ÀÚ¿­ °Ë»ö strstr() »ç¿ë
- ¹®ÀÚ¿­ ½ÃÀÛ ºñ±³ strncmp() »ç¿ë
- ¹®ÀÚ¿­ ³¡ ºñ±³ strcmp() »ç¿ë
- ¼ıÀÚ ÃßÃâ ¡æ isdigit()À» ÀÌ¿ëÇØ ¼öµ¿ º¹»ç
+  char*ì™€ cstring í•¨ìˆ˜ë¥¼ ì‚¬ìš©í•˜ì—¬ ë¬¸ìì—´ ì²˜ë¦¬
+ ë¶€ë¶„ ë¬¸ìì—´ ê²€ìƒ‰ strstr() ì‚¬ìš©
+ ë¬¸ìì—´ ì‹œì‘ ë¹„êµ strncmp() ì‚¬ìš©
+ ë¬¸ìì—´ ë ë¹„êµ strcmp() ì‚¬ìš©
+ ìˆ«ì ì¶”ì¶œ â†’ isdigit()ì„ ì´ìš©í•´ ìˆ˜ë™ ë³µì‚¬
  */
 #include <iostream>
 #include <cstring> // strcmp, strstr, strncmp
@@ -15,21 +15,45 @@
 
 using namespace std;
 
-// Æ¯Á¤ Á¶°Ç¿¡ ¸Â´Â ¹®ÀÚ¿­À» Ã£¾Æ Ãâ·ÂÇÏ´Â ÇÔ¼ö
+// íŠ¹ì • ì¡°ê±´ì— ë§ëŠ” ë¬¸ìì—´ì„ ì°¾ì•„ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜
 void findStrings(char array[][50], int size, const char* keyword, const char* condition) {
     for (int i = 0; i < size; i++) {
-        char* element = array[i];
+        char *element = array[i];
 
         if (strcmp(condition, "contains") == 0) {
-            //
+            if (strstr( array[i], keyword)) {
+                printf("%s\n", array[i]);
+            }
         }
         else if (strcmp(condition, "number") == 0) {
-            //
+            /*int number = 0;
+            int isnumber = 0;
+            while (*element != '\0') {
+                if (isdigit(*element)) {
+                    number = number * 10 + (*element - '0');
+                    isnumber = 1;
+                }
+                else {
+                    if (isnumber) {
+                        if (number <= 0) printf("%d", number);
+                        number = 0;
+                        isnumber = 0;
+                    }
+                }
+                *element++;
+            }*/
         }
         else if (strcmp(condition, "startsWith") == 0) {
-            //
+            if (strncmp(array[i], keyword, strlen(keyword)) == 0) {
+                printf("%s", array[i]);
+            }
         }
         else if (strcmp(condition, "endsWith") == 0) {
+            int strLength = strlen(array[i]);
+            int keylength = strlen(keyword);
+            if (strcmp(array[i] + strLength - keylength, keyword) == 0) {
+                printf("%s", array[i]);
+            }
             //
         }
         else {
@@ -40,32 +64,32 @@ void findStrings(char array[][50], int size, const char* keyword, const char* co
 
 int main() {
     char address[][50] = {
-        "°æ±âµµ ³²¾çÁÖ º°³»µ¿",
-        "¼­¿ï½Ã ¿µµîÆ÷±¸ ´ç»êµ¿",
-        "ºÎ»ê½Ã µ¿·¡±¸ ¿ÂÃµµ¿144",
-        "Ãæ³² Ãµ¾È½Ã ¼­ºÏ±¸",
-        "ºÎ»ê½Ã ¿¬Á¦±¸ ¿¬»êµ¿",
-        "¼­¿ï½Ã ¼ÛÆÄ±¸ ¼®ÃÌµ¿",
-        "ÀüºÏ ºÎ¾È±º ºÎ¾ÈÀ¾",
-        "ºÎ»ê½Ã ±İÁ¤±¸ ÀåÀüµ¿63"
+        "ê²½ê¸°ë„ ë‚¨ì–‘ì£¼ ë³„ë‚´ë™",
+        "ì„œìš¸ì‹œ ì˜ë“±í¬êµ¬ ë‹¹ì‚°ë™",
+        "ë¶€ì‚°ì‹œ ë™ë˜êµ¬ ì˜¨ì²œë™144",
+        "ì¶©ë‚¨ ì²œì•ˆì‹œ ì„œë¶êµ¬",
+        "ë¶€ì‚°ì‹œ ì—°ì œêµ¬ ì—°ì‚°ë™",
+        "ì„œìš¸ì‹œ ì†¡íŒŒêµ¬ ì„ì´Œë™",
+        "ì „ë¶ ë¶€ì•ˆêµ° ë¶€ì•ˆì",
+        "ë¶€ì‚°ì‹œ ê¸ˆì •êµ¬ ì¥ì „ë™63"
     };
-    int size = 8; // ¹è¿­ Å©±â
+    int size = 8; // ë°°ì—´ í¬ê¸°
 
-    // 1. "ºÎ»ê½Ã"¸¦ Æ÷ÇÔÇÏ´Â ¹®ÀÚ¿­ Ã£±â
-    cout << "1. Contains 'ºÎ»ê½Ã':\n";
-    findStrings(address, size, "ºÎ»ê½Ã", "contains");
+    // 1. "ë¶€ì‚°ì‹œ"ë¥¼ í¬í•¨í•˜ëŠ” ë¬¸ìì—´ ì°¾ê¸°
+    cout << "1. Contains 'ë¶€ì‚°ì‹œ':\n";
+    findStrings(address, size, "ë¶€ì‚°ì‹œ", "contains");
 
-    // 2. ¼ıÀÚ¸¸ ÃßÃâÇÏ¿© Ãâ·Â
-    cout << "\n2. ¹®ÀÚ¿­¿¡¼­ ¼ıÀÚ ÃßÃâ:\n";
-    findStrings(address, size, "99", "number"); // 99º¸´Ù ÀÛÀº¼ö 
+    // 2. ìˆ«ìë§Œ ì¶”ì¶œí•˜ì—¬ ì¶œë ¥
+    cout << "\n2. ë¬¸ìì—´ì—ì„œ ìˆ«ì ì¶”ì¶œ:\n";
+    findStrings(address, size, "99", "number"); // 99ë³´ë‹¤ ì‘ì€ìˆ˜ 
 
-    // 3. "¼­¿ï½Ã"·Î ½ÃÀÛÇÏ´Â ¹®ÀÚ¿­ Ã£±â
-    cout << "\n3. Starts with '¼­¿ï½Ã':\n";
-    findStrings(address, size, "¼­¿ï½Ã", "startsWith");
+    // 3. "ì„œìš¸ì‹œ"ë¡œ ì‹œì‘í•˜ëŠ” ë¬¸ìì—´ ì°¾ê¸°
+    cout << "\n3. Starts with 'ì„œìš¸ì‹œ':\n";
+    findStrings(address, size, "ì„œìš¸ì‹œ", "startsWith");
 
-    // 4. "¿¬»êµ¿"À¸·Î ³¡³ª´Â ¹®ÀÚ¿­ Ã£±â
-    cout << "\n4. Ends with '¿¬»êµ¿':\n";
-    findStrings(address, size, "¿¬»êµ¿", "endsWith");
+    // 4. "ì—°ì‚°ë™"ìœ¼ë¡œ ëë‚˜ëŠ” ë¬¸ìì—´ ì°¾ê¸°
+    cout << "\n4. Ends with 'ì—°ì‚°ë™':\n";
+    findStrings(address, size, "ì—°ì‚°ë™", "endsWith");
     system("pause");
     return 0;
 }
