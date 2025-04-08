@@ -2,14 +2,14 @@
 
 using namespace std;
 
-// ¿­°ÅÇü(enum) Menu Á¤ÀÇ
+// ì—´ê±°í˜•(enum) Menu ì •ì˜
 enum Menu { ADD = 1, DELETE, SEARCH, PRINT, EXIT };
 
 int main() {
     int choice;
 
     while (true) {
-        // ¸Ş´º Ãâ·Â
+        // ë©”ë‰´ ì¶œë ¥
         cout << "\n===== Menu =====\n";
         cout << "1. Add\n";
         cout << "2. Delete\n";
@@ -19,10 +19,10 @@ int main() {
         cout << "Enter your choice: ";
         cin >> choice;
 
-        // Á¤¼ö¸¦ enum Å¸ÀÔÀ¸·Î º¯È¯
-        Menu selectedMenu = static_cast<Menu>(choice); // ÀÌ°Íµµ ½ÃÇè¿¡ ³ª¿Â´ÙÀ× ¤µ¤² ¹¹°¡ ¾ó¸Å³ª ³ª¿À³ë ¤¤
+        // ì •ìˆ˜ë¥¼ enum íƒ€ì…ìœ¼ë¡œ ë³€í™˜
+        Menu selectedMenu = static_cast<Menu>(choice); // ì´ê²ƒë„ ì‹œí—˜ì— ë‚˜ì˜¨ë‹¤ì‰ ã……ã…‚ ë­ê°€ ì–¼ë§¤ë‚˜ ë‚˜ì˜¤ë…¸ ã„´
 
-        // switch ¹®À¸·Î ¸Ş´º ¼±ÅÃ
+        // switch ë¬¸ìœ¼ë¡œ ë©”ë‰´ ì„ íƒ
         switch (selectedMenu) {
         case ADD:
             cout << "You selected ADD.\n";
