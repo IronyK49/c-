@@ -1,0 +1,138 @@
+1. enum menu {} 
+switch 문으로 메뉴 구하기 
+
+2. student *table[];
+객체 초기화
+"현대" "제네시스" 5000
+"bmw" 520d" 5000
+이렇게 나오는 걸로 초기화 
+
+3. class method 
+class 변수 
+정리하고 사용하기 
+
+4. class student {} 
+char name; // 생성자 new char[]  + string 사용버전 
+int age;
+
+5. Student *s1;
+ new student [10]; // 객체 배열 
+new student(); /생성자 
+
+delete S1; / 소멸자 구현 
+
+6. Student *table[]; //정렬 
+char* 혹은 string 
+
+table[i] tabe[j] 비교 (객체 비교 method) 
+swap() 
+
+7.class student {
+	private :  (뭐시기)  
+	public : (뭐시기) 
+}
+모든 data member가 private이면 public에 getter setter 
+
+8. 메소드에 return by reference 
+
+car& setmethod() 
+
+9.class student {
+	string name;
+	int age;
+	int score[5]
+	string subject[5];
+}
+//객체 맴버가 배열인 경우 생성자는 우예 만들어야 하는지 
+
+홍길동 20 {20,0,10,40,30} {수학, >>>>>} 
+
+클래스 생성할떄 
+private: data member
+public : 생성자(default, parameterized, copy-받을때 참조) / set이랑 get(참조같이사용) / destructor (~, delete)  
+
+
+
+
+#define _CRT_NO_SECURE_WARNINGS
+
+#include <iostream>
+#include <cstring>
+
+using namespace std;
+
+class Student {
+private :
+	char* name;
+	int age;
+public : 
+	Student() {
+		name = new char[10];
+		strcpy(name, "unknown");
+		age = 0;
+		cout << "default constructor 호출" << endl;
+	}
+	Student(const char* name, int age) {
+		this->name = new char[strlen(name) + 1];
+		strcpy(this->name, name);
+		this->age = age;
+		cout << "parameterized constructor 호출 " << endl;
+	}
+	Student(const Student& other) {
+		this->name = new char[strlen(other.name) + 1];
+		strcpy(this->name, other.name);
+		this->age = other.age;
+		cout << "copy constructor 호출" << endl;
+	}
+	~Student() {
+		cout << "destructor 호출 " << endl;
+		delete[] name;
+	}
+	Student& setname(const char* name) {
+		delete[] this->name;
+		this->name = new char[strlen(name) + 1];
+		strcpy(this->name, name);
+		return *this;
+	}
+	Student& setage(int age) {
+		this->age = age;
+		return *this;
+	}
+	void printStudentInfo() {
+		cout << "이름: " << this->name << "속도 : " << this->age << "살" << endl;
+	}
+
+};
+
+void bubblesorting(Student* arr[], int size) {
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = 0; j < size - i - 1; j++) {
+			if (strcmp(arr[j], arr[j].name) > 0) {
+
+			}
+		}
+	}
+}
+
+
+
+int main() {
+	Student* studentclass = new Student[10]; //객체 10개 생성
+	Student* studentclass2[10]; // 
+	int size = 8;
+	studentclass2[0] = new Student("avocado", 0);
+	studentclass2[1] = new Student("grape", 1);
+	studentclass2[2] = new Student("persimmon", 2);
+	studentclass2[3] = new Student("pear", 3);
+	studentclass2[4] = new Student("blueberry", 4);
+	studentclass2[5] = new Student("strawberry", 5);
+	studentclass2[6] = new Student("melon", 6);
+	studentclass2[7] = new Student("jujube", 7);
+
+	cout << "before sorting: " << endl;
+	for (int i = 0; i < size; i++) {
+		studentclass2[i]->printStudentInfo();
+	}
+
+
+}
