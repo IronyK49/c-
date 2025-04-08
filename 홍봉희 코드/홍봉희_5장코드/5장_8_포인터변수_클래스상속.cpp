@@ -1,9 +1,9 @@
-#include <iostream>
+#include <iostream> //ì´ê±´ ì‹œí—˜ì— ì•ˆë‚˜ì™€ìš© í•˜ì§€ë§Œ ì¤‘ìš”í•˜ë‹ˆê¹Œ ë‚˜ì¤‘ì—” ë‚˜ì˜¬ìˆ˜ë„ ìˆì„ê±° ê°™ì•„ìš© 
 #include <cstring>
 
 using namespace std;
 
-// ===================== »óÀ§ Å¬·¡½º =====================
+// ===================== ìƒìœ„ í´ë˜ìŠ¤ =====================
 class Vehicle {
 protected:
     string licensePlateNumber;
@@ -12,80 +12,80 @@ protected:
 public:
     Vehicle(const string& plate = "Unknown", double capacity = 0.0)
         : licensePlateNumber(plate), engineCapacity(capacity) {
-        cout << "Vehicle »ı¼ºÀÚ È£Ãâ" << endl;
+        cout << "Vehicle ìƒì„±ì í˜¸ì¶œ" << endl;
     }
 
     virtual void show() {
-        cout << "[Vehicle] ¹øÈ£ÆÇ: " << licensePlateNumber
-            << ", ¿£Áø ¿ë·®: " << engineCapacity << "L" << endl;
+        cout << "[Vehicle] ë²ˆí˜¸íŒ: " << licensePlateNumber
+            << ", ì—”ì§„ ìš©ëŸ‰: " << engineCapacity << "L" << endl;
     }
 
     virtual ~Vehicle() {
-        cout << "Vehicle ¼Ò¸êÀÚ È£Ãâ" << endl;
+        cout << "Vehicle ì†Œë©¸ì í˜¸ì¶œ" << endl;
     }
 };
 
-// ===================== ÇÏÀ§ Å¬·¡½º =====================
+// ===================== í•˜ìœ„ í´ë˜ìŠ¤ =====================
 class Car : public Vehicle {
 private:
     char* manufacturer;
     int speed;
 
 public:
-    // ±âº» »ı¼ºÀÚ
+    // ê¸°ë³¸ ìƒì„±ì
     Car()
         : Vehicle("Unknown", 0.0), speed(0) {
         manufacturer = new char[8];
         strcpy(manufacturer, "Unknown");
-        cout << "Car ±âº» »ı¼ºÀÚ È£Ãâ" << endl;
+        cout << "Car ê¸°ë³¸ ìƒì„±ì í˜¸ì¶œ" << endl;
     }
 
-    // ÀÏ¹İ »ı¼ºÀÚ
+    // ì¼ë°˜ ìƒì„±ì
     Car(const char* manufacturer, int speed, const string& plate, double capacity)
         : Vehicle(plate, capacity), speed(speed) {
         this->manufacturer = new char[strlen(manufacturer) + 1];
         strcpy(this->manufacturer, manufacturer);
-        cout << "Car »ı¼ºÀÚ È£Ãâ" << endl;
+        cout << "Car ìƒì„±ì í˜¸ì¶œ" << endl;
     }
 
-    // º¹»ç »ı¼ºÀÚ
+    // ë³µì‚¬ ìƒì„±ì
     Car(const Car& other)
         : Vehicle(other.licensePlateNumber, other.engineCapacity), speed(other.speed) {
         this->manufacturer = new char[strlen(other.manufacturer) + 1];
         strcpy(this->manufacturer, other.manufacturer);
-        cout << "Car º¹»ç »ı¼ºÀÚ È£Ãâ" << endl;
+        cout << "Car ë³µì‚¬ ìƒì„±ì í˜¸ì¶œ" << endl;
     }
 
-    // ¼Ò¸êÀÚ
+    // ì†Œë©¸ì
     ~Car() override {
-        cout << "Car ¼Ò¸êÀÚ È£Ãâ: " << manufacturer << endl;
+        cout << "Car ì†Œë©¸ì í˜¸ì¶œ: " << manufacturer << endl;
         delete[] manufacturer;
     }
 
-    // ¿À¹ö¶óÀÌµùµÈ show ÇÔ¼ö
+    // ì˜¤ë²„ë¼ì´ë”©ëœ show í•¨ìˆ˜
     void show() override {
-        cout << "[Car] Á¦Á¶»ç: " << manufacturer
-            << ", ¼Óµµ: " << speed << " km/h, "
-            << "¹øÈ£ÆÇ: " << licensePlateNumber
-            << ", ¿£Áø ¿ë·®: " << engineCapacity << "L" << endl;
+        cout << "[Car] ì œì¡°ì‚¬: " << manufacturer
+            << ", ì†ë„: " << speed << " km/h, "
+            << "ë²ˆí˜¸íŒ: " << licensePlateNumber
+            << ", ì—”ì§„ ìš©ëŸ‰: " << engineCapacity << "L" << endl;
     }
 };
 
-// ===================== ¸ŞÀÎ =====================
+// ===================== ë©”ì¸ =====================
 int main() {
     const int SIZE = 3;
     Vehicle* vehicles[SIZE];
 
-    vehicles[0] = new Car("Hyundai", 120, "123°¡4567", 1.6);
-    vehicles[1] = new Car("Toyota", 140, "456³ª7890", 2.0);
-    vehicles[2] = new Car("Kia", 100, "789´Ù1234", 1.4);
+    vehicles[0] = new Car("Hyundai", 120, "123ê°€4567", 1.6);
+    vehicles[1] = new Car("Toyota", 140, "456ë‚˜7890", 2.0);
+    vehicles[2] = new Car("Kia", 100, "789ë‹¤1234", 1.4);
 
-    cout << "\n=== polymorphism Å×½ºÆ®: show() È£Ãâ ===" << endl;
+    cout << "\n=== polymorphism í…ŒìŠ¤íŠ¸: show() í˜¸ì¶œ ===" << endl;
     for (int i = 0; i < SIZE; ++i) {
-        vehicles[i]->show();  // µ¿Àû ¹ÙÀÎµù (Car::show)
+        vehicles[i]->show();  // ë™ì  ë°”ì¸ë”© (Car::show)
     }
 
-    cout << "\n=== ¸Ş¸ğ¸® ÇØÁ¦ ===" << endl;
+    cout << "\n=== ë©”ëª¨ë¦¬ í•´ì œ ===" << endl;
     for (int i = 0; i < SIZE; ++i) {
         delete vehicles[i];
     }
