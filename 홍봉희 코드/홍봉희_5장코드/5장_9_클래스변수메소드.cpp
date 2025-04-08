@@ -5,13 +5,13 @@ using namespace std;
 
 class Car {
 private:
-    char* manufacturer;
+    char* manufacturer; // ì¸ìŠ¤í„´ìŠ¤ ë³€ìˆ˜ (ê° ì¸ìŠ¤í„´ìŠ¤ë§ˆë‹¤ ê°€ì§€ëŠ” ë³€ìˆ˜)
     int speed;
 
-    static int count;
+    static int count; // í´ë˜ìŠ¤ ë³€ìˆ˜ (ì´ í´ë˜ìŠ¤ì—ì„œ ì´ë³€ìˆ˜ëŠ” ì˜¤ì§ í•˜ë‚˜, ê°ì²´ ì—†ì´ë„ ì¡´ì¬) 
 
 public:
-    static int getCarCount() {
+    static int getCarCount() { //í´ë˜ìŠ¤ ë©”ì†Œë“œ ë¬¸ì œë‚˜ì˜´ 
         return count;
     }
 
@@ -20,7 +20,7 @@ public:
         strcpy(manufacturer, "Unknown");
         speed = 0;
         ++count;
-        cout << "Default Constructor È£Ãâ" << endl;
+        cout << "Default Constructor í˜¸ì¶œ" << endl;
     }
 
     Car(const char* manufacturer, int speed) {
@@ -28,7 +28,7 @@ public:
         strcpy(this->manufacturer, manufacturer);
         this->speed = speed;
         ++count;
-        cout << "Parameterized Constructor È£Ãâ" << endl;
+        cout << "Parameterized Constructor í˜¸ì¶œ" << endl;
     }
 
     Car(const Car& other) {
@@ -36,11 +36,11 @@ public:
         strcpy(this->manufacturer, other.manufacturer);
         this->speed = other.speed;
         ++count;
-        cout << "Copy Constructor È£Ãâ" << endl;
+        cout << "Copy Constructor í˜¸ì¶œ" << endl;
     }
 
     ~Car() {
-        cout << "Destructor È£Ãâ: " << manufacturer << endl;
+        cout << "Destructor í˜¸ì¶œ: " << manufacturer << endl;
         delete[] manufacturer;
         --count;
     }
@@ -58,37 +58,39 @@ public:
     }
 
     void showCars() const {
-        cout << "Á¦Á¶»ç: " << manufacturer
-            << ", ¼Óµµ: " << speed << " km/h"
-            << ", ÇöÀç Car °´Ã¼ ¼ö: " << count << endl;
+        cout << "ì œì¡°ì‚¬: " << manufacturer
+            << ", ì†ë„: " << speed << " km/h"
+            << ", í˜„ì¬ Car ê°ì²´ ìˆ˜: " << count << endl;
     }
 };
 
-int Car::count = 0;
+int Car::count = 0; // static ë³€ìˆ˜ì´ê¸° ë•Œë¬¸ì— privateì´ì–´ë„ ì˜ˆì™¸ ì ìš© 
+int numberObjects = 0; //ê¸€ë¡œë²Œ ë³€ìˆ˜ 
 
 // ===================== main =====================
 int main() {
+    cout << "\ní˜„ì¬ ì „ì²´ Car ê°ì²´ ìˆ˜: " << Car::getCarCount() << endl;
     const int SIZE = 5;
 
-    // Car °´Ã¼ ¹è¿­À» Æ÷ÀÎÅÍ º¯¼ö·Î °ü¸® (heap¿¡ ¹è¿­ »ı¼º)
-    Car* carSet = new Car[SIZE]; // Default Constructor 5¹ø È£ÃâµÊ
+    // Car ê°ì²´ ë°°ì—´ì„ í¬ì¸í„° ë³€ìˆ˜ë¡œ ê´€ë¦¬ (heapì— ë°°ì—´ ìƒì„±)
+    Car* carSet = new Car[SIZE]; // Default Constructor 5ë²ˆ í˜¸ì¶œë¨
 
-    // ÀÏºÎ °´Ã¼ Á¤º¸ ¼³Á¤ ¹× Ãâ·Â
+    // ì¼ë¶€ ê°ì²´ ì •ë³´ ì„¤ì • ë° ì¶œë ¥
     carSet[0].setManufacturer("Hyundai").setSpeed(100);
     carSet[1].setManufacturer("Toyota").setSpeed(120);
     carSet[2].setManufacturer("Kia").setSpeed(90);
 
     cout << "\n=== carSet[i].showCars() ===" << endl;
     for (int i = 0; i < SIZE; ++i) {
-        carSet[i].showCars();  // °´Ã¼ Á¤º¸ ¹× ÀüÃ¼ °´Ã¼ ¼ö Ãâ·Â
+        carSet[i].showCars();  // ê°ì²´ ì •ë³´ ë° ì „ì²´ ê°ì²´ ìˆ˜ ì¶œë ¥
     }
 
-    cout << "\nÇöÀç ÀüÃ¼ Car °´Ã¼ ¼ö: " << Car::getCarCount() << endl;
+    cout << "\ní˜„ì¬ ì „ì²´ Car ê°ì²´ ìˆ˜: " << Car::getCarCount() << endl;
 
-    // ¸Ş¸ğ¸® ÇØÁ¦
-    delete[] carSet;  // ¸ğµç °´Ã¼ÀÇ ¼Ò¸êÀÚ ÀÚµ¿ È£ÃâµÊ
+    // ë©”ëª¨ë¦¬ í•´ì œ
+    delete[] carSet;  // ëª¨ë“  ê°ì²´ì˜ ì†Œë©¸ì ìë™ í˜¸ì¶œë¨
 
-    cout << "Car °´Ã¼ ¸ğµÎ »èÁ¦ ÈÄ ¼ö: " << Car::getCarCount() << endl;
+    cout << "Car ê°ì²´ ëª¨ë‘ ì‚­ì œ í›„ ìˆ˜: " << Car::getCarCount() << endl;
 
     return 0;
 }
