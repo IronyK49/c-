@@ -19,7 +19,7 @@ public:
         licensePlate = "None";
         speed = 0;
         ++count;
-        cout << "Default Constructor È£Ãâ" << endl;
+        cout << "Default Constructor í˜¸ì¶œ" << endl;
     }
 
     Car(string manufacturer, string licensePlate, int speed) {
@@ -27,11 +27,11 @@ public:
         this->licensePlate = licensePlate;
         this->speed = speed;
         ++count;
-        cout << "Parameterized Constructor È£Ãâ" << endl;
+        cout << "Parameterized Constructor í˜¸ì¶œ" << endl;
     }
 
     ~Car() {
-        cout << "Destructor È£Ãâ: " << manufacturer << " (" << licensePlate << ")" << endl;
+        cout << "Destructor í˜¸ì¶œ: " << manufacturer << " (" << licensePlate << ")" << endl;
         --count;
     }
 
@@ -52,10 +52,10 @@ public:
     }
 
     void show() const {
-        cout << "Á¦Á¶»ç: " << manufacturer
-            << ", ¹øÈ£ÆÇ: " << licensePlate
-            << ", ¼Óµµ: " << speed << " km/h"
-            << ", ÀüÃ¼ °´Ã¼ ¼ö: " << count << endl;
+        cout << "ì œì¡°ì‚¬: " << manufacturer
+            << ", ë²ˆí˜¸íŒ: " << licensePlate
+            << ", ì†ë„: " << speed << " km/h"
+            << ", ì „ì²´ ê°ì²´ ìˆ˜: " << count << endl;
     }
 
     static int getCount() {
@@ -63,28 +63,28 @@ public:
     }
 };
 
-// static º¯¼ö Á¤ÀÇ
+// static ë³€ìˆ˜ ì •ì˜
 int Car::count = 0;
 
 // ===================== main =====================
 int main() {
     const int SIZE = 3;
-    Car* carSet = new Car[SIZE];  // Èü¿¡ Car °´Ã¼ ¹è¿­ »ı¼º
+    Car* carSet = new Car[SIZE];  // í™ì— Car ê°ì²´ ë°°ì—´ ìƒì„±
 
-    carSet[0].setManufacturer("Hyundai").setLicensePlate("12°¡3456").setSpeed(100);
-    carSet[1].setManufacturer("Toyota").setLicensePlate("78³ª9012").setSpeed(120);
-    carSet[2].setManufacturer("Kia").setLicensePlate("34´Ù5678").setSpeed(90);
+    carSet[0].setManufacturer("Hyundai").setLicensePlate("12ê°€3456").setSpeed(100);
+    carSet[1].setManufacturer("Toyota").setLicensePlate("78ë‚˜9012").setSpeed(120);
+    carSet[2].setManufacturer("Kia").setLicensePlate("34ë‹¤5678").setSpeed(90);
 
-    cout << "\n=== Car °´Ã¼ Á¤º¸ Ãâ·Â ===" << endl;
+    cout << "\n=== Car ê°ì²´ ì •ë³´ ì¶œë ¥ ===" << endl;
     for (int i = 0; i < SIZE; ++i) {
         carSet[i].show();
     }
+    Car* carSet2[10]; // ì´ê±° ì—°ìŠµ 
+    cout << "\ní˜„ì¬ ì „ì²´ Car ê°ì²´ ìˆ˜: " << Car::getCount() << endl;
 
-    cout << "\nÇöÀç ÀüÃ¼ Car °´Ã¼ ¼ö: " << Car::getCount() << endl;
+    delete[] carSet;  // ì†Œë©¸ì ìë™ í˜¸ì¶œ
 
-    delete[] carSet;  // ¼Ò¸êÀÚ ÀÚµ¿ È£Ãâ
-
-    cout << "\n°´Ã¼ »èÁ¦ ÈÄ ¼ö: " << Car::getCount() << endl;
+    cout << "\nê°ì²´ ì‚­ì œ í›„ ìˆ˜: " << Car::getCount() << endl;
 
     return 0;
 }
