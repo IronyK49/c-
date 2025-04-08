@@ -1,5 +1,5 @@
 /*
-½ºÆ®¸µ ¹è¿­ Á¤·Ä°ú insert ¹®Á¦ ÇØ°á
+ìŠ¤íŠ¸ë§ ë°°ì—´ ì •ë ¬ê³¼ insert ë¬¸ì œ í•´ê²°
 */
 #include <iostream>
 #include <cstring> // strcmp, strcpy_s
@@ -9,7 +9,7 @@ using namespace std;
 #define MAX_LEN 20
 #define SIZE 8
 
-// ¹è¿­ Ãâ·Â ÇÔ¼ö
+// ë°°ì—´ ì¶œë ¥ í•¨ìˆ˜
 void showData(const char* msg, char* arr[], int size) {
     cout << msg << ": ";
     for (int i = 0; i < size; i++) {
@@ -18,40 +18,40 @@ void showData(const char* msg, char* arr[], int size) {
     cout << endl;
 }
 
-// ¹®ÀÚ¿­ ±³È¯ ÇÔ¼ö (swap)
+// ë¬¸ìì—´ êµí™˜ í•¨ìˆ˜ (swap)
 void swapStrings(char*& a, char*& b) {
-    //a,b´Â Æ÷ÀÎÅÍ¸¦ ÂüÁ¶ÇÏ´Â º¯¼ö
-    //a´Â Æ÷ÀÎÅÍ¸¦ °¡¸®Å°´Â ÂüÁ¶º¯¼ö¶ó´Â ÀÇ¹Ì
+    //a,bëŠ” í¬ì¸í„°ë¥¼ ì°¸ì¡°í•˜ëŠ” ë³€ìˆ˜
+    //aëŠ” í¬ì¸í„°ë¥¼ ê°€ë¦¬í‚¤ëŠ” ì°¸ì¡°ë³€ìˆ˜ë¼ëŠ” ì˜ë¯¸
     char* temp = a;
     a = b;
     b = temp;
-    //main ÇÔ¼öÀÇ Æ÷ÀÎÅÍ°¡ º¯°æµÊ
+    //main í•¨ìˆ˜ì˜ í¬ì¸í„°ê°€ ë³€ê²½ë¨
 }
 
-void swapStrings(char* a, char* b) {//a,b Æ÷ÀÎÅÍ °ªÀÌ º¹»çµÊ
+void swapStrings(char* a, char* b) {//a,b í¬ì¸í„° ê°’ì´ ë³µì‚¬ë¨
     char* temp = a;
     a = b;
     b = temp;
-    //main ÇÔ¼öÀÇ Æ÷ÀÎÅÍ°¡ º¯°æµÇÁö ¾ÊÀ½
+    //main í•¨ìˆ˜ì˜ í¬ì¸í„°ê°€ ë³€ê²½ë˜ì§€ ì•ŠìŒ
 }
 
-// ¹öºí Á¤·Ä ÇÔ¼ö (¿À¸§Â÷¼ø) - Sort() ÇÔ¼ö »ç¿ë ±İÁö -swap() »ç¿ë
+// ë²„ë¸” ì •ë ¬ í•¨ìˆ˜ (ì˜¤ë¦„ì°¨ìˆœ) - Sort() í•¨ìˆ˜ ì‚¬ìš© ê¸ˆì§€ -swap() ì‚¬ìš©
 void sortData(char* arr[], int size) {
     for (int i = 0; i < size - 1; i++) {
         for (int j = 0; j < size - 1 - i; j++) {
-            if (strcmp(arr[j], arr[j + 1]) > 0) { // ¿À¸§Â÷¼ø Á¤·Ä (A-Z)
+            if (strcmp(arr[j], arr[j + 1]) > 0) { // ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬ (A-Z)
                 swapStrings(arr[j], arr[j + 1]);
             }
         }
     }
 }
 
-// ¹®ÀÚ¿­ »ğÀÔ ÈÄ Å©±â Áõ°¡µÈ Á¤·Ä ¹è¿­ ¹İÈ¯ - Sort() »ç¿ë±İÁö O(n) ½Ã°£ º¹Àâµµ·Î ÇØ°á- while ¹® 1°³·Î ÇØ°á 
+// ë¬¸ìì—´ ì‚½ì… í›„ í¬ê¸° ì¦ê°€ëœ ì •ë ¬ ë°°ì—´ ë°˜í™˜ - Sort() ì‚¬ìš©ê¸ˆì§€ O(n) ì‹œê°„ ë³µì¡ë„ë¡œ í•´ê²°- while ë¬¸ 1ê°œë¡œ í•´ê²° 
 char** insertData(char* data[], int size, const char* value) {
-    char* newValue = new char[MAX_LEN]; // µ¿Àû ¸Ş¸ğ¸® ÇÒ´ç
+    char* newValue = new char[MAX_LEN]; // ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹
     strcpy_s(newValue, MAX_LEN, value);
 
-    // »õ·Î¿î ¹è¿­ »ı¼º (size + 1 Å©±â)
+    // ìƒˆë¡œìš´ ë°°ì—´ ìƒì„± (size + 1 í¬ê¸°)
     char** newData = new char* [size + 1];
     for (int i = 0; i < size + 1; i++) {
         newData[i] = new char[MAX_LEN];
@@ -60,7 +60,7 @@ char** insertData(char* data[], int size, const char* value) {
     int i = size - 1;
     bool tag = true;
 
-    // ±âÁ¸ µ¥ÀÌÅÍ¸¦ º¹»çÇÏ¸é¼­ »õ·Î¿î µ¥ÀÌÅÍ »ğÀÔ
+    // ê¸°ì¡´ ë°ì´í„°ë¥¼ ë³µì‚¬í•˜ë©´ì„œ ìƒˆë¡œìš´ ë°ì´í„° ì‚½ì…
     while (i >= 0) {
         if (strcmp(data[i], newValue) > 0) {
             strcpy_s(newData[i + 1], MAX_LEN, data[i]);
@@ -83,12 +83,12 @@ char** insertData(char* data[], int size, const char* value) {
         }
     }
 
-    delete[] newValue; // µ¿Àû ¸Ş¸ğ¸® ÇØÁ¦
+    delete[] newValue; // ë™ì  ë©”ëª¨ë¦¬ í•´ì œ
     return newData;
 }
 
 int main() {
-    // ÃÊ±â ¹®ÀÚ¿­ µ¥ÀÌÅÍ µ¿Àû ÇÒ´ç
+    // ì´ˆê¸° ë¬¸ìì—´ ë°ì´í„° ë™ì  í• ë‹¹
     char* data[] = {
         new char[MAX_LEN] {"avocado"},
         new char[MAX_LEN] {"grape"},
@@ -100,28 +100,28 @@ int main() {
         new char[MAX_LEN] {"jujube"}
     };
 
-    showData("Á¤·Ä Àü", data, SIZE);
+    showData("ì •ë ¬ ì „", data, SIZE);
 
     sortData(data, SIZE);
 
-    showData("Á¤·Ä ÈÄ (¿À¸§Â÷¼ø)", data, SIZE);
+    showData("ì •ë ¬ í›„ (ì˜¤ë¦„ì°¨ìˆœ)", data, SIZE);
 
-    // »ğÀÔÇÒ µ¥ÀÌÅÍ
+    // ì‚½ì…í•  ë°ì´í„°
     const char* realData[3] = { "waterMelon", "kiwi", "apple" };
 
     for (const char* newData : realData) {
         char** result = insertData(data, SIZE, newData);
-        cout << "\n\n" << newData << " »ğÀÔ ÈÄ: ";
-        showData("»ğÀÔ ÈÄ Á¤·ÄµÈ ¹è¿­", result, SIZE + 1);
+        cout << "\n\n" << newData << " ì‚½ì… í›„: ";
+        showData("ì‚½ì… í›„ ì •ë ¬ëœ ë°°ì—´", result, SIZE + 1);
 
-        // µ¿Àû ÇÒ´çµÈ ¸Ş¸ğ¸® ÇØÁ¦
+        // ë™ì  í• ë‹¹ëœ ë©”ëª¨ë¦¬ í•´ì œ
         for (int i = 0; i < SIZE + 1; i++) {
             delete[] result[i];
         }
         delete[] result;
     }
 
-    // ¿ø·¡ ¹è¿­ÀÇ ¸Ş¸ğ¸® ÇØÁ¦
+    // ì›ë˜ ë°°ì—´ì˜ ë©”ëª¨ë¦¬ í•´ì œ
     for (int i = 0; i < SIZE; i++) {
         delete[] data[i];
     }
