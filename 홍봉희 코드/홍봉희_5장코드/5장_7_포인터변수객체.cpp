@@ -1,5 +1,5 @@
-#include <iostream>
-#include <cstring> // strcpy, strlen »ç¿ë
+#include <iostream> //ì—¬ê¸° ì¤‘ìš” 
+#include <cstring> // strcpy, strlen ì‚¬ìš©
 
 using namespace std;
 
@@ -9,42 +9,42 @@ private:
     int speed;
 
 public:
-    // ±âº» »ı¼ºÀÚ (Default Constructor)
+    // ê¸°ë³¸ ìƒì„±ì (Default Constructor)
     Car() {
-        manufacturer = new char[8]; // "Unknown"À» ÀúÀåÇÒ ÃæºĞÇÑ Å©±â
+        manufacturer = new char[8]; // "Unknown"ì„ ì €ì¥í•  ì¶©ë¶„í•œ í¬ê¸°
         strcpy(manufacturer, "Unknown");
         speed = 0;
-        cout << "Default Constructor È£Ãâ" << endl;
+        cout << "Default Constructor í˜¸ì¶œ" << endl;
     }
 
-    // ÀÏ¹İ »ı¼ºÀÚ (Parameterized Constructor)
+    // ì¼ë°˜ ìƒì„±ì (Parameterized Constructor)
     Car(const char* manufacturer, int speed) {
-        this->manufacturer = new char[strlen(manufacturer) + 1]; // ¹®ÀÚ¿­ Å©±â¸¸Å­ µ¿Àû ÇÒ´ç
+        this->manufacturer = new char[strlen(manufacturer) + 1]; // ë¬¸ìì—´ í¬ê¸°ë§Œí¼ ë™ì  í• ë‹¹
         strcpy(this->manufacturer, manufacturer);
         this->speed = speed;
-        cout << "Parameterized Constructor È£Ãâ" << endl;
+        cout << "Parameterized Constructor í˜¸ì¶œ" << endl;
     }
 
-    // º¹»ç »ı¼ºÀÚ (±íÀº º¹»ç)
+    // ë³µì‚¬ ìƒì„±ì (ê¹Šì€ ë³µì‚¬)
     Car(const Car& other) {
-        this->manufacturer = new char[strlen(other.manufacturer) + 1]; // »õ ¸Ş¸ğ¸® ÇÒ´ç
+        this->manufacturer = new char[strlen(other.manufacturer) + 1]; // ìƒˆ ë©”ëª¨ë¦¬ í• ë‹¹
         strcpy(this->manufacturer, other.manufacturer);
         this->speed = other.speed;
-        cout << "Copy Constructor È£Ãâ" << endl;
+        cout << "Copy Constructor í˜¸ì¶œ" << endl;
     }
 
-    // ¼Ò¸êÀÚ (Destructor)
+    // ì†Œë©¸ì (Destructor)
     ~Car() {
-        cout << "Destructor È£Ãâ: " << manufacturer << endl;
-        delete[] manufacturer; // µ¿Àû ÇÒ´çµÈ ¸Ş¸ğ¸® ÇØÁ¦
+        cout << "Destructor í˜¸ì¶œ: " << manufacturer << endl;
+        delete[] manufacturer; // ë™ì  í• ë‹¹ëœ ë©”ëª¨ë¦¬ í•´ì œ
     }
 
-    // Setter¿¡¼­ this Æ÷ÀÎÅÍ »ç¿ë (Method Chaining)
+    // Setterì—ì„œ this í¬ì¸í„° ì‚¬ìš© (Method Chaining)  ì´ê±° ì¤‘ìš” return by reference ê¸°ì¡´ ë©”ëª¨ë¦¬ í•´ì œí•˜ê³  ìƒˆë¡œ í• ë‹¹í•˜ëŠ”ê±° 
     Car& setManufacturer(const char* manufacturer) {
-        delete[] this->manufacturer; // ±âÁ¸ ¸Ş¸ğ¸® ÇØÁ¦
-        this->manufacturer = new char[strlen(manufacturer) + 1]; // »õ·Î¿î ¸Ş¸ğ¸® ÇÒ´ç
+        delete[] this->manufacturer; // ê¸°ì¡´ ë©”ëª¨ë¦¬ í•´ì œ
+        this->manufacturer = new char[strlen(manufacturer) + 1]; // ìƒˆë¡œìš´ ë©”ëª¨ë¦¬ í• ë‹¹
         strcpy(this->manufacturer, manufacturer);
-        return *this;  // this Æ÷ÀÎÅÍ¸¦ »ç¿ëÇÏ¿© °´Ã¼ ÀÚ½ÅÀ» ¹İÈ¯
+        return *this;  // this í¬ì¸í„°ë¥¼ ì‚¬ìš©í•˜ì—¬ ê°ì²´ ìì‹ ì„ ë°˜í™˜
     }
 
     Car& setSpeed(int speed) {
@@ -52,44 +52,44 @@ public:
         return *this;
     }
 
-    // ¸â¹ö ÇÔ¼ö¿¡¼­ this Æ÷ÀÎÅÍ »ç¿ë
+    // ë©¤ë²„ í•¨ìˆ˜ì—ì„œ this í¬ì¸í„° ì‚¬ìš©
     void printCarInfo() {
-        cout << "Á¦Á¶»ç: " << this->manufacturer << ", ¼Óµµ: " << this->speed << " km/h" << endl;
+        cout << "ì œì¡°ì‚¬: " << this->manufacturer << ", ì†ë„: " << this->speed << " km/h" << endl;
     }
 };
 
 int main() {
-    cout << "=== Default Constructor ½Ç½À ===" << endl;
-    Car* car1 = new Car(); // ±âº» »ı¼ºÀÚ È£Ãâ
+    cout << "=== Default Constructor ì‹¤ìŠµ ===" << endl;
+    Car* car1 = new Car(); // ê¸°ë³¸ ìƒì„±ì í˜¸ì¶œ
     car1->printCarInfo();
 
-    cout << "\n=== Parameterized Constructor ½Ç½À ===" << endl;
-    Car* car2 = new Car("Hyundai", 80); // ÀÏ¹İ »ı¼ºÀÚ È£Ãâ °´Ã¼´Â heap¿¡ Á¸ÀçÇÔ 
+    cout << "\n=== Parameterized Constructor ì‹¤ìŠµ ===" << endl;
+    Car* car2 = new Car("Hyundai", 80); // ì¼ë°˜ ìƒì„±ì í˜¸ì¶œ ê°ì²´ëŠ” heapì— ì¡´ì¬í•¨ 
     car2->printCarInfo();
 
-    cout << "\n=== Copy Constructor ½Ç½À ===" << endl;
-    Car* car3 = new Car(*car2); // º¹»ç »ı¼ºÀÚ È£Ãâ
+    cout << "\n=== Copy Constructor ì‹¤ìŠµ ===" << endl;
+    Car* car3 = new Car(*car2); // ë³µì‚¬ ìƒì„±ì í˜¸ì¶œ
     car3->printCarInfo();
 
-    cout << "\n=== Method Chaining ½Ç½À ===" << endl;
-    car2->setManufacturer("Toyota").setSpeed(100).printCarInfo();
+    cout << "\n=== Method Chaining ì‹¤ìŠµ ===" << endl;
+    car2->setManufacturer("Toyota").setSpeed(100).printCarInfo(); //return by reference cascading í•´ì•¼í•¨ 
 
-    // µ¿Àû ÇÒ´çµÈ °´Ã¼¸¦ »èÁ¦ (¼Ò¸êÀÚ È£ÃâµÊ)
+    // ë™ì  í• ë‹¹ëœ ê°ì²´ë¥¼ ì‚­ì œ (ì†Œë©¸ì í˜¸ì¶œë¨)
     delete car1;
     delete car2;
     delete car3;
 
-    //³­ÀÌµµ »ó - °í±Ş°úÁ¤
-    Car* carSet = new Car[10]; //10°³ÀÇ °´Ã¼¸¦ »ı¼º - Car()¸¦ È£Ãâ
+    //ë‚œì´ë„ ìƒ - ê³ ê¸‰ê³¼ì •
+    Car* carSet = new Car[10]; //10ê°œì˜ ê°ì²´ë¥¼ ìƒì„± - Car()ë¥¼ í˜¸ì¶œ // 10ê°œì˜ ë°°ì—´ì„ ë§Œë“¤ê³  heapì— ë©”ëª¨ë¦¬ í• ë‹¹(new) ë° í• ë‹¹ëœ ê³µê°„ì— ì‹œì‘ ì£¼ì†Œë¥¼ ë°˜í™˜ 
     carSet[0].setManufacturer("Toyota");
     carSet[1].setSpeed(120);
     carSet[2].printCarInfo();
 
-    //Car* carSet = new Car[10]("Hyundai", 100); // ¿¡·¯
+    //Car* carSet = new Car[10]("Hyundai", 100); // ì—ëŸ¬
 
-    Car* carSet2[10];
+    Car* carSet2[10]; // array of pointer stackì˜ì—­ì— ì¡´ì¬ ê°ì²´ë“¤ì˜ table ê°ì²´ ìƒì„± ë° ì´ˆê¸°í™” arrayofpointer new ë‹¤ í•„ìš”í•¨ + ì •ë ¬í•˜ê³  ì¶œë ¥
     for (int i = 0; i < 10; ++i) {
-        carSet2[i] = new Car("Hyundai", 100 + i * 10); // °¢°¢ »ı¼ºÀÚ È£Ãâ
+        carSet2[i] = new Car("Hyundai", 100 + i * 10); // ê°ê° ìƒì„±ì í˜¸ì¶œ
     }
 
     for (int i = 0; i < 10; ++i)
