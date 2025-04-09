@@ -53,8 +53,7 @@ public : 생성자(default, parameterized, copy-받을때 참조) / set이랑 ge
 
 
 
-
-#define _CRT_NO_SECURE_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>
 #include <cstring>
@@ -98,17 +97,41 @@ public :
 		this->age = age;
 		return *this;
 	}
+
+	const char* getname() const {
+		return name;
+	}
+
+	int getage() const {
+		return age;
+	}
+
 	void printStudentInfo() {
 		cout << "이름: " << this->name << "속도 : " << this->age << "살" << endl;
+	}
+	void swapwith(Student& other) {
+		Student temp(other);
+		other = *this;
+		*this = temp;
+	}
+	Student& operator=(const Student& other) {
+		if (this == &other) return *this; // 자기 자신 확인
+
+		delete[] this->name; // 기존 메모리 해제
+		this->name = new char[strlen(other.name) + 1];
+		strcpy(this->name, other.name);
+		this->age = other.age;
+		return *this;
 	}
 
 };
 
-void bubblesorting(Student* arr[], int size) {
+
+void bubblesort_name(Student* arr[], int size) {
 	for (int i = 0; i < size - 1; i++) {
 		for (int j = 0; j < size - i - 1; j++) {
-			if (strcmp(arr[j], arr[j].name) > 0) {
-
+			if (strcmp(arr[j]->getname(), arr[j + 1]->getname()) > 0) {
+				arr[j]->swapwith(*arr[j + 1]);
 			}
 		}
 	}
@@ -117,8 +140,8 @@ void bubblesorting(Student* arr[], int size) {
 
 
 int main() {
-	Student* studentclass = new Student[10]; //객체 10개 생성
-	Student* studentclass2[10]; // 
+	//Student* studentclass = new Student[10]; //객체 10개 생성
+	Student* studentclass2[8]; // 
 	int size = 8;
 	studentclass2[0] = new Student("avocado", 0);
 	studentclass2[1] = new Student("grape", 1);
@@ -133,6 +156,11 @@ int main() {
 	for (int i = 0; i < size; i++) {
 		studentclass2[i]->printStudentInfo();
 	}
-
-
+	bubblesort_name(studentclass2, size);
+	cout << "after sorting: " << endl;
+	for (int i = 0; i < size; i++) {
+		studentclass2[i]->printStudentInfo();
+	}
+	return 0;
+	
 }
