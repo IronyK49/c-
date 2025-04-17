@@ -27,6 +27,10 @@ public:
     }
 
     void print() const {
+        cout << endl <<manufacturer << " " << model << ", "
+            << weight << "kg, " << speed << "km/h";
+    }
+		 void print2() const {
         cout << manufacturer << " " << model << ", "
             << weight << "kg, " << speed << "km/h" << endl;
     }
@@ -54,7 +58,7 @@ public:
     }
 };
 
-// Á¶°Ç¿¡ ¸Â´Â ÀÚµ¿Â÷ Å½»ö
+// ì¡°ê±´ì— ë§ëŠ” ìë™ì°¨ íƒìƒ‰
 Car* findLightestFastCar(Car* cars[], int size) {
     Car* result = nullptr;
     for (int i = 0; i < size; ++i) {
@@ -67,7 +71,7 @@ Car* findLightestFastCar(Car* cars[], int size) {
     return result;
 }
 
-// Á¦Á¶»ç+¸ğµ¨¸í ±âÁØ Á¤·Ä
+// ì œì¡°ì‚¬+ëª¨ë¸ëª… ê¸°ì¤€ ì •ë ¬
 void sortCars(Car* cars[], int size) {
     for (int i = 0; i < size - 1; ++i) {
         for (int j = 0; j < size - i - 1; ++j) {
@@ -81,40 +85,35 @@ void sortCars(Car* cars[], int size) {
 int main() {
     const int SIZE = 7;
     Car* cars[SIZE];
-    cars[0] = new Car("Çö´ë", "Avante", 1250.5, 180);
-    cars[1] = new Car("±â¾Æ", "K5", 1300.0, 190);
-    cars[2] = new Car("Å×½½¶ó", "Model3", 1610.3, 250);
-    cars[3] = new Car("º¥Ã÷", "E300", 1680.2, 240);
+    cars[0] = new Car("í˜„ëŒ€", "Avante", 1250.5, 180);
+    cars[1] = new Car("ê¸°ì•„", "K5", 1300.0, 190);
+    cars[2] = new Car("í…ŒìŠ¬ë¼", "Model3", 1610.3, 250);
+    cars[3] = new Car("ë²¤ì¸ ", "E300", 1680.2, 240);
     cars[4] = new Car("BMW", "530i", 1655.0, 245);
-    cars[5] = new Car("Çö´ë", "Sonata", 1430.7, 200);
-    cars[6] = new Car("±â¾Æ", "Sportage", 1500.0, 210);
+    cars[5] = new Car("í˜„ëŒ€", "Sonata", 1430.7, 200);
+    cars[6] = new Car("ê¸°ì•„", "Sportage", 1500.0, 210);
 
-    // Á¶°Ç¿¡ ¸Â´Â ÀÚµ¿Â÷ Ã£±â
+    // ì¡°ê±´ì— ë§ëŠ” ìë™ì°¨ ì°¾ê¸°
     Car* target = findLightestFastCar(cars, SIZE);
     if (target) {
-        cout << "[Á¶°Ç¿¡ ¸Â´Â ÀÚµ¿Â÷ (¼öÁ¤ Àü)]" << endl;
-        target->print();
 
-        // Á¦Á¶»ç/¸ğµ¨ ÀÚµ¿ º¯°æ
-        target->setManufacturer("¶÷º¸¸£±â´Ï");
-        target->setModel("Huracan");
+        // ì œì¡°ì‚¬/ëª¨ë¸ ìë™ ë³€ê²½
+        target->setManufacturer("ì°¨ì„¸ëŒ€");
+        target->setModel("í˜ì‹ ");
 
-        cout << "[¼öÁ¤µÈ ÀÚµ¿Â÷ Á¤º¸]" << endl;
-        target->print();
+        target->print2();
     }
 
-    // Á¤·Ä ¹× Ãâ·Â
+    // ì •ë ¬ ë° ì¶œë ¥
     sortCars(cars, SIZE);
-    cout << "\n[Á¤·ÄµÈ ÀÚµ¿Â÷ ¸ñ·Ï]" << endl;
     for (int i = 0; i < SIZE; ++i) {
         cars[i]->print();
+				
     }
 
-    // ¸Ş¸ğ¸® ÇØÁ¦
+    // ë©”ëª¨ë¦¬ í•´ì œ
     for (int i = 0; i < SIZE; ++i) {
         delete cars[i];
     }
-
-    cout << "\n[ÇÁ·Î±×·¥ Á¾·á]" << endl;
     return 0;
 }
