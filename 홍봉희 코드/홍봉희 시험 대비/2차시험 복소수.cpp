@@ -130,7 +130,7 @@ int main() {
 
     switch (command) {
     case ShowComplex:
-        cout << "Complex Numbers: " << endl;
+        cout << "Complex Numbers:" << endl;
         showComplex(table, N);
         break;
 
@@ -149,7 +149,6 @@ int main() {
         cout << endl;
         break;
     }
-
     case Sort:
         sortComplexByMagnitude(table, N);
         cout << "Sorted by Magnitude: " << endl;
