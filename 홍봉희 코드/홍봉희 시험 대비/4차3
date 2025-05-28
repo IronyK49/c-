@@ -1,0 +1,125 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+// 제품 계층
+class Item {
+protected:
+    string name;
+    double price;
+public:
+    Item(string name, double price) : name(name), price(price) {}
+    virtual ~Item() {}
+
+    string getName() const { return name; }
+    double getPrice() const { return price; }
+
+    virtual void show() const {
+        cout << name << " - W" << price;
+    }
+};
+
+class Electronics : public Item {
+    int warranty;  // 보증 기간 (월 단위)
+public:
+    Electronics(string name, double price, int warranty)
+        : Item(name, price), warranty(warranty) {}
+
+    void show() const override {
+        cout << "[전자제품] ";
+        Item::show();
+        cout << ", 보증 " << warranty << "개월" << endl;
+    }
+};
+
+class Clothing : public Item {
+    string size;
+public:
+    Clothing(string name, double price, string size)
+        : Item(name, price), size(size) {}
+
+    void show() const override {
+        cout << "[의류] ";
+        Item::show();
+        cout << ", 사이즈: " << size << endl;
+    }
+};
+
+// 고객 계층
+class Customer {
+protected:
+    string name;
+public:
+    Customer(string name) : name(name) {}
+    virtual ~Customer() {}
+
+    string getName() const { return name; }
+    virtual double getDiscountRate() const = 0;
+};
+
+class RegularCustomer : public Customer {
+public:
+    RegularCustomer(string name) : Customer(name) {}
+    double getDiscountRate() const override {
+        return 0.03; // 3% 할인
+    }
+};
+
+class PremiumCustomer : public Customer {
+public:
+    PremiumCustomer(string name) : Customer(name) {}
+    double getDiscountRate() const override {
+        return 0.10; // 10% 할인
+    }
+};
+
+// 주문 클래스 (고객과 제품을 참조)
+class Order {
+    Customer* customer;
+    Item* item;
+    int quantity;
+
+public:
+    Order(Customer* cust, Item* itm, int qty)
+        : customer(cust), item(itm), quantity(qty) {}
+
+    void printSummary() const {
+        double basePrice = item->getPrice();
+        double discount = basePrice * customer->getDiscountRate();
+        double finalPrice = basePrice - discount;
+        double total = finalPrice * quantity;
+
+        cout << "\n--- 주문 내역 ---\n";
+        cout << "고객명: " << customer->getName() << endl;
+        cout << "상품명: " << item->getName() << endl;
+        cout << "수량: " << quantity << endl;
+        cout << fixed << setprecision(2);
+        cout << "단가: W" << basePrice << ", 할인: W" << discount << ", 최종단가: W" << finalPrice << endl;
+        cout << "총 결제금액: W" << total << endl;
+    }
+};
+
+// 메인 함수
+int main() {
+    // 고객 생성
+    RegularCustomer c1("홍길동");
+    PremiumCustomer c2("이순신");
+
+    // 제품 생성
+    Electronics laptop("노트북", 1200000, 24);
+    Clothing shirt("셔츠", 45000, "L");
+
+    // 주문 생성
+    Order o1(&c1, &laptop, 1);
+    Order o2(&c2, &shirt, 3);
+
+    // 출력
+    laptop.show();
+    shirt.show();
+
+    o1.printSummary();
+    o2.printSummary();
+
+    return 0;
+}
