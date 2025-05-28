@@ -28,7 +28,7 @@ public:
     }
 
     virtual void show() const {
-        cout << name << " - W" << price << " \uC7AC\uACE0\uB7C9: " << stockQuantity;
+        cout << name << " - W" << price << " 재고량: " << stockQuantity;
     }
 };
 
@@ -68,8 +68,8 @@ public:
     }
 
     void printOrderSummary() const {
-        cout << "\n=== \uC8FC\uBB38 \uC694\uC57D ===\n";
-        cout << "\uACE0\uAC1D: " << customer->getName() << endl;
+        cout << "\n=== 주문 요약 ===\n";
+        cout << "고객: " << customer->getName() << endl;
         double total = 0;
         for (int i = 0; i < count; ++i) {
             double basePrice = items[i]->getPrice();
@@ -79,11 +79,11 @@ public:
 
             cout << fixed << setprecision(2);
             cout << "- " << items[i]->getName() << " x " << quantities[i]
-                 << "\uAC1C: \uC6D0\uAC00 W" << basePrice
-                 << ", \uD560\uC778 W" << discount
-                 << ", \uCD5C\uC885 W" << finalPrice << endl;
+                << "개: 원가 W" << basePrice
+                << ", 할인 W" << discount
+                << ", 최종 W" << finalPrice << endl;
         }
-        cout << "\uCD1D \uC9C0\uBD88 \uAE08\uC561: W" << total << endl;
+        cout << "총 지불 금액: W" << total << endl;
     }
 
     bool matchCustomer(string target) const {
@@ -94,17 +94,13 @@ public:
         return customer->getName() > other.customer->getName();
     }
 };
-// [제공 코드 끝]
 
-// Book 클래스
 class Book : public Item {
-    string title, author, publisher;
+    string author, publisher;
 public:
     Book(const string& title, const string& author, const string& publisher, double price, int stock)
-        : Item(title, price, stock), title(title), author(author), publisher(publisher) {}
+        : Item(title, price, stock), author(author), publisher(publisher){}
 };
-
-// EBook 클래스
 class EBook : public Book {
     string format, size;
 public:
@@ -112,7 +108,6 @@ public:
         : Book(title, author, publisher, price, stock), format(format), size(size) {}
 };
 
-// Bag 클래스
 class Bag : public Item {
     string model, size, color;
 public:
@@ -120,73 +115,67 @@ public:
         : Item(model, price, stock), model(model), size(size), color(color) {}
 };
 
-// RegularCustomer 클래스
 class RegularCustomer : public Customer {
     string city;
     int mileage;
 public:
     RegularCustomer(const string& name, const string& city, int mileage)
         : Customer(name), city(city), mileage(mileage) {}
-
     double applyDiscount(double price) const override {
-        return price * 0.03; // 3% 할인
+        return price * 0.03;
     }
 };
 
-// VIPCustomer 클래스
 class VIPCustomer : public Customer {
     double discountRate;
 public:
     VIPCustomer(const string& name, double discountRate)
-        : Customer(name), discountRate(discountRate) {}
-
+        : Customer(name), discountRate(discountRate){}
     double applyDiscount(double price) const override {
         return price * discountRate;
     }
 };
 
-// OrderTable 클래스
 class OrderTable {
     static const int MAX = 20;
     Order* orders[MAX]{};
     int count = 0;
-
 public:
     void add(Order* o) {
         if (count < MAX) orders[count++] = o;
     }
-
     void printAll() const {
-        for (int i = 0; i < count; ++i)
+        for (int i = 0; i < count; i++) {
             orders[i]->printOrderSummary();
+        }
     }
-
     Order* search(string name) const {
-        for (int i = 0; i < count; ++i)
+        for (int i = 0; i < count; i++) {
             if (orders[i]->matchCustomer(name)) return orders[i];
+        }
         return nullptr;
     }
-
     int remove(string name) {
         int removed = 0;
-        for (int i = 0; i < count; ) {
+        for (int i = 0; i < count;) {
             if (orders[i]->matchCustomer(name)) {
                 delete orders[i];
-                for (int j = i; j < count - 1; ++j)
+                for (int j = i; j < count - 1; j++) {
                     orders[j] = orders[j + 1];
+                }
                 orders[--count] = nullptr;
                 ++removed;
-            } else {
-                ++i;
+            }
+            else {
+                i++;
             }
         }
         return removed;
     }
-
     void sort() {
-        for (int i = 0; i < count - 1; ++i) {
-            for (int j = 0; j < count - i - 1; ++j) {
-                if (*orders[j] > *orders[j + 1]) {
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                if (orders[j] > orders[j + 1]) {
                     swap(orders[j], orders[j + 1]);
                 }
             }
@@ -194,17 +183,20 @@ public:
     }
 };
 
+
+
+
 enum Menu { INPUT = 1, PRINT, SEARCH, DELETE, SORT, EXIT };
 
 int main() {
     OrderTable table;
     Item* items[] = {
-        new Book("\uC790\uBC14\uC758\uC815\uC11D", "\uB0A8\uAD81\uC131", "\uB3C4\uC6B0\uCD9C\uD310", 30000, 50),
-        new EBook("\uC54C\uACE0\uB9AC\uC998", "PDF", "2GB", "\uD64D\uAE38\uB3D9", "\uD55C\uBE44\uD310", 25000, 100),
-        new Bag("\uC5D0\uCF54\uBC31", "Large", "\uD558\uD2B8", 12000, 80)
+        new Book("자바의정석", "남궁성", "도우출판", 30000, 50),
+        new EBook("알고리즘", "PDF", "2GB", "홍길동", "한빛", 25000, 100),
+        new Bag("에코백", "Large", "화이트", 12000, 80)
     };
-    Customer* rc = new RegularCustomer("\uD64D\uAE38\uB3D9", "\uC11C\uC6B8", 1000);
-    Customer* vip = new VIPCustomer("\uC774\uC21C\uC2E0", 0.1);
+    Customer* rc = new RegularCustomer("홍길동", "서울", 1000);
+    Customer* vip = new VIPCustomer("이순신", 0.1);
 
     Order* order1 = new Order(rc);
     order1->addItem(items[0], 1);
@@ -215,14 +207,14 @@ int main() {
 
     int select;
     while (true) {
-        cout << "\n1. \uAC1D\uCCB4 \uC785\uB825, 2. \uC804\uCCB4 \uCD9C\uB825, 3. \uAC80\uC0C9, 4. \uC0AD\uC81C, 5. \uC815\uB82C, 6. \uC885\uB8CC: ";
+        cout << "\n1. 객체 입력, 2. 전체 출력, 3. 검색, 4. 삭제, 5. 정렬, 6. 종료: ";
         cin >> select;
 
         switch (static_cast<Menu>(select)) {
         case INPUT:
             table.add(order1);
             table.add(order2);
-            cout << "\uC8FC\uBB38 \uC785\uB825 \uC644\uB8CC.\n";
+            cout << "주문 입력 완료.\n";
             break;
 
         case PRINT:
@@ -231,26 +223,26 @@ int main() {
 
         case SEARCH: {
             string name;
-            cout << "\uAC80\uC0C9\uD560 \uACE0\uAC1D\uBA85: ";
+            cout << "검색할 고객명: ";
             cin >> name;
             Order* found = table.search(name);
             if (found) found->printOrderSummary();
-            else cout << name << " \uC744(\uB97C) \uCC3E\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4.\n";
+            else cout << name << " 을(를) 찾을 수 없습니다.\n";
             break;
         }
 
         case DELETE: {
             string name;
-            cout << "\uC0AD\uC81C\uD560 \uACE0\uAC1D\uBA85: ";
+            cout << "삭제할 고객명: ";
             cin >> name;
             int count = table.remove(name);
-            cout << "\uC0AD\uC81C\uB41C \uC8FC\uBB38 \uC218: " << count << "\n";
+            cout << "삭제된 주문 수: " << count << "\n";
             break;
         }
 
         case SORT:
             table.sort();
-            cout << "\uC815\uB82C \uC644\uB8CC.\n";
+            cout << "정렬 완료.\n";
             break;
 
         case EXIT:
