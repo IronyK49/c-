@@ -60,28 +60,25 @@ class ObjectTable {
     const size_t MAX_SIZE = 6;
 public:
     size_t size() const { return data.size(); }
-
     void add(const T& obj, int errCode) {
         if (data.size() >= MAX_SIZE)
             throw TableException(errCode, "용량 초과로 객체 추가 불가");
         data.push_back(obj);
     }
-
     void remove(int count, int errCode) {
         if (count > data.size())
             throw TableException(errCode, "삭제 요청 수가 현재 객체 수보다 많음");
         data.erase(data.end() - count, data.end());
     }
-
-    void sort(function<bool(const T&, const T&)> f) {
-        std::sort(data.begin(), data.end(), f);
+    template <typename Compare>
+    void sort(Compare cmp) {
+        std::sort(data.begin(), data.end(), cmp);
     }
-
-    void showAll() const; // 특수화 필요
+    void showAll() const;
 };
 
 // ===========================
-// showAll() 특수화 for Employee
+// ObjectTable<Employee> 특수화 showAll()
 // ===========================
 template <>
 void ObjectTable<Employee>::showAll() const {
@@ -89,9 +86,8 @@ void ObjectTable<Employee>::showAll() const {
         e.show();
     cout << "총 직원 수: " << data.size() << "명\n";
 }
-
 // ===========================
-// showAll() 특수화 for Product
+// ObjectTable<Product> 특수화 showAll()
 // ===========================
 template <>
 void ObjectTable<Product>::showAll() const {
@@ -99,7 +95,6 @@ void ObjectTable<Product>::showAll() const {
         p.show();
     cout << "총 제품 수: " << data.size() << "개\n";
 }
-
 // ===========================
 // 메뉴 정의
 // ===========================
@@ -147,7 +142,7 @@ int main() {
 
     int choice;
     while (true) {
-        cout << "\n========= 메뉴 =========\n";
+        cout << "========= 메뉴 =========\n";
         cout << "1. 직원 출력  2. 제품 출력\n";
         cout << "3. 직원 이름 정렬  4. 직원 도시 정렬\n";
         cout << "5. 제품 이름 정렬  6. 제품 색상 정렬\n";
@@ -163,24 +158,16 @@ int main() {
             case SHOW_PRODUCT:
                 prodTable.showAll(); break;
             case SORT_ENAME:
-                empTable.sort([](const Employee& a, const Employee& b) {
-                    return a.getEname() < b.getEname();
-                });
+                empTable.sort([](const Employee& a, const Employee& b) { return a.getEname() < b.getEname(); });
                 empTable.showAll(); break;
             case SORT_CITY:
-                empTable.sort([](const Employee& a, const Employee& b) {
-                    return a.getCity() < b.getCity();
-                });
+                empTable.sort([](const Employee& a, const Employee& b) { return a.getCity() < b.getCity(); });
                 empTable.showAll(); break;
             case SORT_PNAME:
-                prodTable.sort([](const Product& a, const Product& b) {
-                    return a.getPname() < b.getPname();
-                });
+                prodTable.sort([](const Product& a, const Product& b) { return a.getPname() < b.getPname(); });
                 prodTable.showAll(); break;
             case SORT_COLOR:
-                prodTable.sort([](const Product& a, const Product& b) {
-                    return a.getColor() < b.getColor();
-                });
+                prodTable.sort([](const Product& a, const Product& b) { return a.getColor() < b.getColor(); });
                 prodTable.showAll(); break;
             case ADD_EMPLOYEE: {
                 string eno, ename, city;
@@ -206,15 +193,13 @@ int main() {
             }
             case REMOVE_EMPLOYEE: {
                 int qty;
-                cout << "삭제할 직원 수: ";
-                cin >> qty;
+                cout << "삭제할 직원 수: "; cin >> qty;
                 empTable.remove(qty, 2001);
                 break;
             }
             case REMOVE_PRODUCT: {
                 int qty;
-                cout << "삭제할 제품 수: ";
-                cin >> qty;
+                cout << "삭제할 제품 수: "; cin >> qty;
                 prodTable.remove(qty, 2002);
                 break;
             }
@@ -228,4 +213,5 @@ int main() {
             cout << "[예외 발생: 코드 " << ex.getCode() << "] " << ex.what() << "\n";
         }
     }
+    system("pause");
 }
